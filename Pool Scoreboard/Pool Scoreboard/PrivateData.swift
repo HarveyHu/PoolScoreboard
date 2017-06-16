@@ -12,4 +12,5 @@ struct PrivateData {
     // MARK - UserDefault
     static let KEY_IS_NEW_LAUNCH = "keyIsNewLaunch"
     static let KEY_MAGNETS_POSITION = "keyMagnetsPosition"
+    static let KEY_BALLS_POSITION = "keyBallsPosition"
 }

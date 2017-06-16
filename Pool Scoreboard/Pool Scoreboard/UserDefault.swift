@@ -30,6 +30,15 @@ struct UserDefault {
         }
     }
     
+    var ballPositionList: Dictionary<String, Array<Double>>? {
+        get {
+            return UserDefaults.standard.object(forKey: PrivateData.KEY_BALLS_POSITION) as? Dictionary<String, Array<Double>>
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: PrivateData.KEY_BALLS_POSITION)
+        }
+    }
+    
     // MARK: - Operation
     func getObject(key: String) -> AnyObject? {
         return UserDefaults.standard.object(forKey: key) as AnyObject?

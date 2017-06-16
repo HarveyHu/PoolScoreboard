@@ -12,4 +12,12 @@ extension UIColor {
     class func themeOrange() -> UIColor {
         return UIColor.hexToColor(hex: 0xFFF74B59)
     }
+    
+    class func lightBlue() -> UIColor {
+        return UIColor.hexToColor(hex: 0xFF58FAF4)
+    }
+    
+    class func grassGreen() -> UIColor {
+        return UIColor.hexToColor(hex: 0xFF80FF00)
+    }
 }

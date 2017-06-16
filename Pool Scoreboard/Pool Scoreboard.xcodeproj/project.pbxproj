@@ -34,6 +34,8 @@
 		D86C47D71E147D7000F5AA71 /* SideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86C47D61E147D7000F5AA71 /* SideView.swift */; };
 		D86C47D91E149D4900F5AA71 /* MiddleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86C47D81E149D4900F5AA71 /* MiddleView.swift */; };
 		D86C47DB1E14AA7600F5AA71 /* MagnetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86C47DA1E14AA7600F5AA71 /* MagnetView.swift */; };
+		D86CE3251EF2AC2C005AFB75 /* PoolTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86CE3241EF2AC2C005AFB75 /* PoolTableViewController.swift */; };
+		D86CE3271EF2ACA8005AFB75 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86CE3261EF2ACA8005AFB75 /* Ball.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +83,8 @@
 		D86C47D61E147D7000F5AA71 /* SideView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideView.swift; sourceTree = "<group>"; };
 		D86C47D81E149D4900F5AA71 /* MiddleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiddleView.swift; sourceTree = "<group>"; };
 		D86C47DA1E14AA7600F5AA71 /* MagnetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagnetView.swift; sourceTree = "<group>"; };
+		D86CE3241EF2AC2C005AFB75 /* PoolTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PoolTableViewController.swift; sourceTree = "<group>"; };
+		D86CE3261EF2ACA8005AFB75 /* Ball.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
 		DD19A4DCC57E5994C080A03F /* Pods_Pool_Scoreboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pool_Scoreboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -188,6 +192,7 @@
 			children = (
 				D86C47D21E13CB6900F5AA71 /* Util */,
 				D86C47D31E13CB7400F5AA71 /* Abstraction */,
+				D86CE3281EF334E6005AFB75 /* Component */,
 				D86C47D51E13D5CE00F5AA71 /* View */,
 				D82DF4201E2CBE1D0041FF10 /* ViewModel */,
 				D86AAF5F1E1F2F520046F73E /* Model */,
@@ -241,10 +246,27 @@
 		D86C47D51E13D5CE00F5AA71 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D86CE3231EF291BD005AFB75 /* PoolTableView */,
 				D82DF4181E25DE180041FF10 /* MainView */,
 				D82DF4191E25DE2C0041FF10 /* ClockView */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		D86CE3231EF291BD005AFB75 /* PoolTableView */ = {
+			isa = PBXGroup;
+			children = (
+				D86CE3241EF2AC2C005AFB75 /* PoolTableViewController.swift */,
+			);
+			name = PoolTableView;
+			sourceTree = "<group>";
+		};
+		D86CE3281EF334E6005AFB75 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				D86CE3261EF2ACA8005AFB75 /* Ball.swift */,
+			);
+			name = Component;
 			sourceTree = "<group>";
 		};
 		E58274A4C4E1D1E5D5DE9DBD /* Pods */ = {
@@ -466,11 +488,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D86CE3251EF2AC2C005AFB75 /* PoolTableViewController.swift in Sources */,
 				D86C47D01E13CB6000F5AA71 /* UIColor+Extension.swift in Sources */,
 				D86C47CB1E13CB3D00F5AA71 /* BaseViewController.swift in Sources */,
 				D86C47A91E13C98300F5AA71 /* ScoreboardViewController.swift in Sources */,
 				D82DF41B1E264C8E0041FF10 /* ClockViewController.swift in Sources */,
 				D86C47D71E147D7000F5AA71 /* SideView.swift in Sources */,
+				D86CE3271EF2ACA8005AFB75 /* Ball.swift in Sources */,
 				D86C47A71E13C98300F5AA71 /* AppDelegate.swift in Sources */,
 				D86C47D91E149D4900F5AA71 /* MiddleView.swift in Sources */,
 				D82DF4221E2CBE380041FF10 /* ClockViewModel.swift in Sources */,

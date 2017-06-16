@@ -21,14 +21,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootVC = ScoreboardViewController()
         rootVC.tabBarItem.image = UIImage(named: "home-7")
         rootVC.tabBarItem.title = "Scoreboard"
+        
         let clockVC = ClockViewController()
         clockVC.tabBarItem.image = UIImage(named: "clock-stopwatch-7")
         clockVC.tabBarItem.title = "Stopwatch"
         
+        let poolTableVC = PoolTableViewController()
+        poolTableVC.tabBarItem.image = UIImage(named: "pool-table-icon")
+        poolTableVC.tabBarItem.title = "Tactic Board"
+        
         let tabbarC = UITabBarController()
         tabbarC.tabBar.isTranslucent = false
         tabbarC.tabBar.barStyle = .default
-        tabbarC.setViewControllers([rootVC, clockVC], animated: false)
+        tabbarC.setViewControllers([rootVC, clockVC, poolTableVC], animated: false)
         tabbarC.tabBar.tintColor = UIColor.red
         //let rootNC = BaseNavigationController(rootViewController: rootVC)
         

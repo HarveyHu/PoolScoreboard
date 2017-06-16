@@ -8,13 +8,15 @@
 
 import UIKit
 
-class ClockViewController: BaseViewController {
+class ClockViewController: BaseViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     let stopwatchView = UIView()
     let clockLabel = UILabel()
     let startButton = UIButton()
     let stopButton = UIButton()
     let extensionButton = UIButton()
     let viewModel = ClockViewModel()
+    let pickerView = UIPickerView()
+    var pickerDataArray = Array<Int>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +45,7 @@ class ClockViewController: BaseViewController {
         self.stopwatchView.addSubview(startButton)
         self.stopwatchView.addSubview(stopButton)
         self.stopwatchView.addSubview(extensionButton)
+        self.stopwatchView.addSubview(pickerView)
         
         self.view.backgroundColor = UIColor.white
         self.stopwatchView.backgroundColor = UIColor.black
@@ -68,6 +71,16 @@ class ClockViewController: BaseViewController {
         extensionButton.setTitle("EXTENSION", for: .normal)
         extensionButton.titleLabel?.font = UIFont.systemFont(ofSize: 30.0)
         extensionButton.setTitleColor(UIColor.orange, for: .highlighted)
+        
+        if pickerDataArray.count == 0 {
+            for index in 10...100 {
+                pickerDataArray.append(index)
+            }
+        }
+        pickerView.dataSource = self
+        pickerView.delegate = self
+        pickerView.backgroundColor = UIColor.white
+        pickerView.isHidden = true
     }
     
     override func setUIConstraints() {
@@ -108,6 +121,13 @@ class ClockViewController: BaseViewController {
             make.width.equalTo(screenWidth * 0.25)
             make.height.equalTo(stopButton.snp.width).multipliedBy(0.5)
         }
+        
+        pickerView.snp.makeConstraints { (make) in
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            //make.height.equalTo(pickerView.snp.width)
+        }
     }
 
     override func setUIEvents() {
@@ -147,5 +167,42 @@ class ClockViewController: BaseViewController {
                     .addDisposableTo(self.disposeBag)
             }, onCompleted: nil, onDisposed: nil)
             .addDisposableTo(disposeBag)
+        
+        pickerView.rx.itemSelected.asDriver()
+        .drive(onNext: {[weak self] (rowAndComponent) in
+            self?.viewModel.stopTimer()
+            self?.viewModel.countdownSeconds = self!.pickerDataArray[rowAndComponent.0]
+            self?.clockLabel.text = "\(self!.pickerDataArray[rowAndComponent.0])"
+            self?.pickerView.isHidden = true
+        }, onCompleted: nil, onDisposed: nil)
+        .addDisposableTo(disposeBag)
+        
+        
+        let panGR_clockLabel = UIPanGestureRecognizer()
+        panGR_clockLabel.rx.event.asDriver().drive(onNext: {[weak self](pan) in
+            if pan.state == .began && self!.pickerView.isHidden {
+                self?.pickerView.isHidden = false
+            }
+            }, onCompleted: nil, onDisposed: nil)
+            .addDisposableTo(disposeBag)
+        clockLabel.isUserInteractionEnabled = true
+        clockLabel.addGestureRecognizer(panGR_clockLabel)
+    }
+    
+    // MARK - UIPickerView
+    // returns the number of 'columns' to display.
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    
+    // returns the # of rows in each component..
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.pickerDataArray.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        return "\(self.pickerDataArray[row])";
     }
 }

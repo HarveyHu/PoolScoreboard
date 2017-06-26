@@ -126,7 +126,6 @@ class ClockViewController: BaseViewController, UIPickerViewDataSource, UIPickerV
             make.bottom.equalToSuperview()
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            //make.height.equalTo(pickerView.snp.width)
         }
     }
 
@@ -136,57 +135,61 @@ class ClockViewController: BaseViewController, UIPickerViewDataSource, UIPickerV
         
         
         startButton.rx.tap.asDriver()
-        .drive(onNext: { (tap) in
-            self.viewModel.startTimer()
+        .drive(onNext: {[weak self] (tap) in
+            guard let strongSelf = self else {return}
+            strongSelf.viewModel.startTimer()
             
-            self.viewModel.seconds.drive(onNext: { (second) in
-                self.clockLabel.text = "\(second)"
+            strongSelf.viewModel.seconds.drive(onNext: { (second) in
+                strongSelf.clockLabel.text = "\(second)"
                 
             }, onCompleted: nil, onDisposed: nil)
-                .addDisposableTo(self.disposeBag)
+                .addDisposableTo(strongSelf.disposeBag)
         }, onCompleted: nil, onDisposed: nil)
             .addDisposableTo(disposeBag)
         
         stopButton.rx.tap.asDriver()
-            .drive(onNext: { (tap) in
-                self.viewModel.stopTimer()
-                self.viewModel.seconds.drive(onNext: { (second) in
-                    self.clockLabel.text = "\(second)"
+            .drive(onNext: {[weak self] (tap) in
+                guard let strongSelf = self else {return}
+                strongSelf.viewModel.stopTimer()
+                strongSelf.viewModel.seconds.drive(onNext: { (second) in
+                    strongSelf.clockLabel.text = "\(second)"
                 }, onCompleted: nil, onDisposed: nil)
-                    .addDisposableTo(self.disposeBag)
+                    .addDisposableTo(strongSelf.disposeBag)
             }, onCompleted: nil, onDisposed: nil)
             .addDisposableTo(disposeBag)
         
         extensionButton.rx.tap.asDriver()
-            .drive(onNext: { (tap) in
-                self.viewModel.extentionCall()
-                self.viewModel.seconds.drive(onNext: { (second) in
-                    self.clockLabel.text = "\(second)"
+            .drive(onNext: {[weak self] (tap) in
+                guard let strongSelf = self else {return}
+                strongSelf.viewModel.extentionCall()
+                strongSelf.viewModel.seconds.drive(onNext: { (second) in
+                    strongSelf.clockLabel.text = "\(second)"
                     
                 }, onCompleted: nil, onDisposed: nil)
-                    .addDisposableTo(self.disposeBag)
+                    .addDisposableTo(strongSelf.disposeBag)
             }, onCompleted: nil, onDisposed: nil)
             .addDisposableTo(disposeBag)
         
         pickerView.rx.itemSelected.asDriver()
         .drive(onNext: {[weak self] (rowAndComponent) in
-            self?.viewModel.stopTimer()
-            self?.viewModel.countdownSeconds = self!.pickerDataArray[rowAndComponent.0]
-            self?.clockLabel.text = "\(self!.pickerDataArray[rowAndComponent.0])"
-            self?.pickerView.isHidden = true
+            guard let strongSelf = self else {return}
+            strongSelf.viewModel.stopTimer()
+            strongSelf.viewModel.countdownSeconds = self!.pickerDataArray[rowAndComponent.0]
+            strongSelf.clockLabel.text = "\(strongSelf.pickerDataArray[rowAndComponent.0])"
+            strongSelf.pickerView.isHidden = true
         }, onCompleted: nil, onDisposed: nil)
         .addDisposableTo(disposeBag)
         
         
-        let panGR_clockLabel = UIPanGestureRecognizer()
-        panGR_clockLabel.rx.event.asDriver().drive(onNext: {[weak self](pan) in
-            if pan.state == .began && self!.pickerView.isHidden {
+        let tapGR_clockLabel = UITapGestureRecognizer()
+        tapGR_clockLabel.rx.event.asDriver().drive(onNext: {[weak self](tap) in
+            if self!.pickerView.isHidden {
                 self?.pickerView.isHidden = false
             }
             }, onCompleted: nil, onDisposed: nil)
             .addDisposableTo(disposeBag)
         clockLabel.isUserInteractionEnabled = true
-        clockLabel.addGestureRecognizer(panGR_clockLabel)
+        clockLabel.addGestureRecognizer(tapGR_clockLabel)
     }
     
     // MARK - UIPickerView

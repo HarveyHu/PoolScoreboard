@@ -118,7 +118,7 @@ class ClockViewController: BaseViewController, UIPickerViewDataSource, UIPickerV
         extensionButton.snp.makeConstraints { (make) in
             make.top.equalTo(startButton.snp.bottom).offset(20.0)
             make.centerX.equalToSuperview()
-            make.width.equalTo(screenWidth * 0.25)
+            make.width.equalTo(screenWidth * 0.5)
             make.height.equalTo(stopButton.snp.width).multipliedBy(0.5)
         }
         
@@ -185,6 +185,8 @@ class ClockViewController: BaseViewController, UIPickerViewDataSource, UIPickerV
         tapGR_clockLabel.rx.event.asDriver().drive(onNext: {[weak self](tap) in
             if self!.pickerView.isHidden {
                 self?.pickerView.isHidden = false
+            } else {
+                self?.pickerView.isHidden = true
             }
             }, onCompleted: nil, onDisposed: nil)
             .addDisposableTo(disposeBag)

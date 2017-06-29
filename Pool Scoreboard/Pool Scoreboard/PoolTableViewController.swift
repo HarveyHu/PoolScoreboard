@@ -37,7 +37,7 @@ class PoolTableViewController: BaseViewController {
         self.backgroundView.backgroundColor = UIColor.black
         imageView.image = UIImage(named: "pool_table")
         
-        self.resetButton.setTitle("RESET", for: .normal)
+        self.resetButton.setTitle(" RESET ", for: .normal)
         self.resetButton.setBackgroundImage(UIColor.gray.tinyImage(), for: .normal)
         self.resetButton.setBackgroundImage(UIColor.darkGray.tinyImage(), for: .selected)
         self.resetButton.layer.cornerRadius = 10
@@ -74,7 +74,7 @@ class PoolTableViewController: BaseViewController {
             make.leading.equalToSuperview().offset(20.0)
             make.bottom.equalTo(imageView.snp.bottom)
             make.height.equalToSuperview().multipliedBy(0.05)
-            make.trailing.equalTo(imageView.snp.leading).offset(-20)
+            //make.trailing.equalTo(imageView.snp.leading).offset(-20)
         }
     }
     

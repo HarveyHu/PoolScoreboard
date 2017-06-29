@@ -12,6 +12,7 @@ import RxCocoa
 class Ball {
     var ballViews: Array<UIView>
     let diameter: Double
+    let gap = Double(UIScreen.main.bounds.height / 50)
     init(diameter: Double) {
         ballViews = Array<UIView>()
         self.diameter = diameter
@@ -87,7 +88,7 @@ class Ball {
         if let list = userDefault.ballPositionList, let x = list["\(number)"]?[0], let y = list["\(number)"]?[1] {
             ballFrame = CGRect(x: x - diameter / 2, y: y - diameter / 2, width: diameter, height: diameter)
         } else {
-            ballFrame = CGRect(x: 20.0 + diameter, y: (diameter + 20) * Double(number + 1), width: diameter, height: diameter)
+            ballFrame = CGRect(x: gap + diameter, y: (diameter + gap) * Double(number + 1), width: diameter, height: diameter)
         }
         return ballFrame
     }
@@ -102,8 +103,9 @@ class Ball {
     }
     
     func resetLocations() {
+        
         for number in 0...15 {
-            let ballFrame = CGRect(x: 20.0 + diameter, y: (diameter + 20) * Double(number + 1), width: diameter, height: diameter)
+            let ballFrame = CGRect(x: gap + diameter, y: (diameter + gap) * Double(number + 1), width: diameter, height: diameter)
             updateLocation(number: number, frame: ballFrame)
         }
     }

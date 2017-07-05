@@ -46,9 +46,9 @@ class PoolTableViewController: BaseViewController {
         self.resetButton.layer.borderColor = UIColor.red.cgColor
         
         let height = self.view.frame.size.height
-        ball = Ball(diameter: Double(height) / 40.0)
+        ball = Ball(diameter: Double(height) / 40.0, touchDiameter: Double(height) / 40.0 * 2.0)
         for ballView in ball!.ballViews {
-            ballView.frame = ball!.getLocation(number: ballView.tag)
+            ballView.center = ball!.getLocationCenterPoint(number: ballView.tag)
             self.backgroundView.addSubview(ballView)
         }
     }
@@ -91,7 +91,7 @@ class PoolTableViewController: BaseViewController {
         .drive(onNext: {[weak self] in
             self?.ball?.resetLocations()
             for ballView in self!.ball!.ballViews {
-                ballView.frame = self!.ball!.getLocation(number: ballView.tag)
+                ballView.center = self!.ball!.getLocationCenterPoint(number: ballView.tag)
             }
         }, onCompleted: nil, onDisposed: nil)
         .addDisposableTo(disposeBag)
@@ -134,7 +134,7 @@ class PoolTableViewController: BaseViewController {
                 
                 // keep the last position to userDefault
                 if pan.state == .ended {
-                    self?.ball?.updateLocation(number: view.tag, frame: view.frame)
+                    self?.ball?.updateLocation(number: view.tag, center: view.center)
                 }
             }
             }, onCompleted: nil, onDisposed: nil)

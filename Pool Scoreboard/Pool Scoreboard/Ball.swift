@@ -13,10 +13,11 @@ class Ball {
     var ballViews: Array<UIView>
     let diameter: Double
     let gap = Double(UIScreen.main.bounds.height / 50)
-    init(diameter: Double) {
+    let touchDiameter: Double
+    init(diameter: Double, touchDiameter: Double) {
         ballViews = Array<UIView>()
         self.diameter = diameter
-        
+        self.touchDiameter = touchDiameter
         self.ballViews = self.setupBallViews()
     }
     
@@ -25,13 +26,24 @@ class Ball {
         for index in 0...15 {
             let ballView = createBallView(number: index)
             ballView.tag = index
+            
             newViews.append(ballView)
         }
         return newViews
     }
     
     private func createBallView(number: Int) -> UIView {
-        let ballView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: diameter, height: diameter))
+        let touchView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: touchDiameter, height: touchDiameter))
+        touchView.bounds = touchView.frame
+        touchView.backgroundColor = UIColor.clear
+        
+        let ballView = UIView()
+        touchView.addSubview(ballView)
+        
+        // Size needs to be set up before Center, otherwise, Origin will be set as the same point as Center.
+        ballView.frame.size = CGSize(width: diameter, height: diameter)
+        ballView.center = CGPoint(x: touchView.bounds.width / 2, y: touchView.bounds.height / 2)
+        
         ballView.layer.cornerRadius = CGFloat(diameter / 2)
         ballView.layer.masksToBounds = true
         if number < 9 {
@@ -53,7 +65,7 @@ class Ball {
         circleLable.backgroundColor = UIColor.white
         ballView.addSubview(circleLable)
         
-        return ballView
+        return touchView
     }
     
     private func getColorFromNumber(number: Int) -> UIColor {
@@ -82,31 +94,31 @@ class Ball {
         return UIColor.white
     }
     
-    func getLocation(number: Int) -> CGRect {
+    func getLocationCenterPoint(number: Int) -> CGPoint {
         let userDefault = UserDefault()
-        var ballFrame = CGRect.zero
+        var centerPoint = CGPoint.zero
         if let list = userDefault.ballPositionList, let x = list["\(number)"]?[0], let y = list["\(number)"]?[1] {
-            ballFrame = CGRect(x: x - diameter / 2, y: y - diameter / 2, width: diameter, height: diameter)
+            centerPoint = CGPoint(x: x, y: y)
         } else {
-            ballFrame = CGRect(x: gap + diameter, y: (diameter + gap) * Double(number + 1), width: diameter, height: diameter)
+            centerPoint = CGPoint(x: gap + diameter, y: (diameter + gap) * Double(number + 1))
         }
-        return ballFrame
+        return centerPoint
     }
     
-    func updateLocation(number: Int, frame: CGRect) {
+    func updateLocation(number: Int, center: CGPoint) {
         var userDefault = UserDefault()
         if userDefault.ballPositionList == nil {
-            userDefault.ballPositionList = ["\(number)": [Double(frame.origin.x) + diameter / 2, Double(frame.origin.y) + diameter / 2]]
+            userDefault.ballPositionList = ["\(number)": [Double(center.x), Double(center.y)]]
         } else {
-            userDefault.ballPositionList?["\(number)"] = [Double(frame.origin.x) + diameter / 2, Double(frame.origin.y) + diameter / 2]
+            userDefault.ballPositionList?["\(number)"] = [Double(center.x), Double(center.y)]
         }
     }
     
     func resetLocations() {
         
         for number in 0...15 {
-            let ballFrame = CGRect(x: gap + diameter, y: (diameter + gap) * Double(number + 1), width: diameter, height: diameter)
-            updateLocation(number: number, frame: ballFrame)
+            let ballCenter = CGPoint(x: gap + diameter, y: (diameter + gap) * Double(number + 1))
+            updateLocation(number: number, center: ballCenter)
         }
     }
 }

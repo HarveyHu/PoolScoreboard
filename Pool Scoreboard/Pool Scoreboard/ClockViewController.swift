@@ -58,19 +58,23 @@ class ClockViewController: BaseViewController, UIPickerViewDataSource, UIPickerV
         clockLabel.layer.borderWidth = 10.0
         clockLabel.layer.borderColor = UIColor.white.cgColor
         clockLabel.layer.masksToBounds = true
+        clockLabel.adjustsFontSizeToFitWidth = true
         
         startButton.setTitle("START", for: .normal)
         startButton.setTitleColor(UIColor.white, for: .normal)
         startButton.setTitleColor(UIColor.orange, for: .highlighted)
         startButton.titleLabel?.font = UIFont.systemFont(ofSize: 30.0)
+        startButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
         stopButton.setTitle("STOP", for: .normal)
         stopButton.titleLabel?.font = UIFont.systemFont(ofSize: 30.0)
         stopButton.setTitleColor(UIColor.orange, for: .highlighted)
+        stopButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
         extensionButton.setTitle("EXTENSION", for: .normal)
         extensionButton.titleLabel?.font = UIFont.systemFont(ofSize: 30.0)
         extensionButton.setTitleColor(UIColor.orange, for: .highlighted)
+        extensionButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
         if pickerDataArray.count == 0 {
             for index in 10...100 {

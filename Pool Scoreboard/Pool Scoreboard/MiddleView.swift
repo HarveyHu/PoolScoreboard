@@ -36,6 +36,7 @@ class MiddleView: UIView {
         label.textColor = UIColor.white
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 28.0)
+        label.adjustsFontSizeToFitWidth = true
         return label
     }
     
@@ -72,6 +73,7 @@ class MiddleView: UIView {
         titleTextField.textAlignment = .center
         titleTextField.textColor = UIColor.white
         titleTextField.font = UIFont.systemFont(ofSize: 32.0)
+        titleTextField.adjustsFontSizeToFitWidth = true
     }
     
     override func layoutSubviews() {

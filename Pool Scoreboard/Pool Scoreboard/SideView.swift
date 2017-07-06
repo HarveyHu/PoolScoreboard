@@ -87,11 +87,13 @@ class SideView: UIView {
         titleTextField.textAlignment = .center
         titleTextField.textColor = UIColor.white
         titleTextField.font = UIFont.systemFont(ofSize: 36.0)
+        titleTextField.adjustsFontSizeToFitWidth = true
         
         foulLabel.text = "Foul"
         foulLabel.textAlignment = .center
         foulLabel.textColor = UIColor.white
         foulLabel.font = UIFont.systemFont(ofSize: 30.0)
+        foulLabel.adjustsFontSizeToFitWidth = true
     }
     
     override func layoutSubviews() {

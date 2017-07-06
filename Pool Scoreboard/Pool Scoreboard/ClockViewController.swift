@@ -81,6 +81,7 @@ class ClockViewController: BaseViewController, UIPickerViewDataSource, UIPickerV
         pickerView.delegate = self
         pickerView.backgroundColor = UIColor.white
         pickerView.isHidden = true
+        pickerView.selectRow(viewModel.countdownSeconds - 10, inComponent: 0, animated: false)
     }
     
     override func setUIConstraints() {

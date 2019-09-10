@@ -62,7 +62,7 @@ class BaseScrollViewController: BaseViewController {
         tapGR1.rx.event.asDriver().drive(onNext: {[weak self] (tap) in
             self?.view.endEditing(true)
         }, onCompleted: nil, onDisposed: nil)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         self.contentView.isUserInteractionEnabled = true
         self.contentView.addGestureRecognizer(tapGR1)
     }
@@ -73,10 +73,10 @@ class BaseScrollViewController: BaseViewController {
         guard let info = aNotification.userInfo else {
             return
         }
-        let kbSize = (info[UIKeyboardFrameBeginUserInfoKey] as AnyObject).cgRectValue.size
+        let kbSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as AnyObject).cgRectValue.size
         prettyLog("originalContentInsets:\(originalContentInsets)")
         prettyLog("contentSize:\(scrollView.contentSize)")
-        let contentInsets = UIEdgeInsetsMake(originalContentInsets.top, originalContentInsets.left, kbSize.height, originalContentInsets.right)
+        let contentInsets = UIEdgeInsets(top: originalContentInsets.top, left: originalContentInsets.left, bottom: kbSize.height, right: originalContentInsets.right)
         prettyLog("contentInset:\(contentInsets)")
         self.scrollView.contentInset = contentInsets
         self.scrollView.scrollIndicatorInsets = contentInsets

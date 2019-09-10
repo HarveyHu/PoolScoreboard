@@ -1,14 +1,14 @@
-platform :ios, '9.0'
+platform :ios, '10.0'
 inhibit_all_warnings!
 
 use_frameworks!
 
 target 'Pool Scoreboard' do
-	pod 'SnapKit',              '~> 3.0'
+	pod 'SnapKit',              '~> 5.0'
 	pod 'MBProgressHUD',        '~> 1.0'
-	pod 'RxSwift',              '~> 3.0'
-    pod 'RxCocoa',              '~> 3.0'
-    pod 'RxDataSources',        '~> 1.0'
+	pod 'RxSwift',              '~> 5.0'
+    pod 'RxCocoa',              '~> 5.0'
+    pod 'RxDataSources',        '~> 4.0'
 end
 
 def testing_pods

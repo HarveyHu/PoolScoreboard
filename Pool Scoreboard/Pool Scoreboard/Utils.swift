@@ -100,11 +100,11 @@ func cacheImage(imageName: String, image: UIImage) -> Bool {
     }
     
     var imageData: Data?
-    let extFileName = imageName.substring(from: range.upperBound).lowercased()
+    let extFileName = imageName[range.upperBound...].lowercased()
     if extFileName == "png" {
-        imageData = UIImagePNGRepresentation(image)
+        imageData = image.pngData()
     } else if extFileName == "jpg" {
-        imageData = UIImageJPEGRepresentation(image, 0)
+        imageData = image.jpegData(compressionQuality: 0)
     }
     
     if let data = imageData {
@@ -121,12 +121,12 @@ func cacheImage(imageName: String, image: UIImage) -> Bool {
 }
 
 func getFileNameFromUrl(urlString: String) -> String? {
-    let reversedString = String(urlString.characters.reversed())
+    let reversedString = String(urlString.reversed())
     guard let range = reversedString.range(of: "/") else {
         prettyLog("have no extFileName")
         return nil
     }
     
-    let reversedSubstring = reversedString.substring(to: range.lowerBound)
-    return String(reversedSubstring.characters.reversed())
+    let reversedSubstring = reversedString[..<range.lowerBound]
+    return String(reversedSubstring.reversed())
 }

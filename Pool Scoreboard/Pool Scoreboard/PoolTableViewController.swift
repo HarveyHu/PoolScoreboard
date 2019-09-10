@@ -94,7 +94,7 @@ class PoolTableViewController: BaseViewController {
                 ballView.center = self!.ball!.getLocationCenterPoint(number: ballView.tag)
             }
         }, onCompleted: nil, onDisposed: nil)
-        .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
 
@@ -138,7 +138,7 @@ class PoolTableViewController: BaseViewController {
                 }
             }
             }, onCompleted: nil, onDisposed: nil)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(panGR)
     }

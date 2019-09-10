@@ -69,7 +69,7 @@ class MagnetView: UIView {
                 }
             }
             }, onCompleted: nil, onDisposed: nil)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         self.isUserInteractionEnabled = true
         self.addGestureRecognizer(panGR)
     }

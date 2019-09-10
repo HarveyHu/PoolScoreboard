@@ -52,22 +52,22 @@ class BaseViewController: UIViewController, UISetting {
         tapGR1.rx.event.asDriver().drive(onNext: {[weak self] (tap) in
             self?.view.endEditing(true)
             }, onCompleted: nil, onDisposed: nil)
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         self.view.isUserInteractionEnabled = true
         self.view.addGestureRecognizer(tapGR1)
     }
     
     // MARK: - Keyboard
     func registerForKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown), name: NSNotification.Name.UIKeyboardDidShow, object:nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown), name: UIResponder.keyboardDidShowNotification, object:nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func deregisterForKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
         
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     // Called when the UIKeyboardDidShowNotification is sent.
@@ -79,7 +79,7 @@ class BaseViewController: UIViewController, UISetting {
         
         
         
-        let kbSize = (info[UIKeyboardFrameBeginUserInfoKey] as AnyObject).cgRectValue.size
+        let kbSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as AnyObject).cgRectValue.size
         var aRect = activeView.frame
         aRect.size.height = aRect.size.height - kbSize.height
         
